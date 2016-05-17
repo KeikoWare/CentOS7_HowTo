@@ -9,9 +9,11 @@ Install CentOS 7 minimal installation
 Disable SElinux:
 ```
 $ sudo  vi /etc/sysconfig/selinux
-...
-SELINUX=disabled
-...
+[[i]]
+    SELINUX=disabled
+[[ESC]]
+:w
+:q
 ```
 
 Enable http through firewall:
@@ -20,7 +22,8 @@ $ sudo firewall-cmd --permanent --add-service=http
 $ sudo firewall-cmd --permanent --add-service=https
 $ sudo firewall-cmd --reload
 ```
-CURL SKAL OPDATERES INDTIL CentOS 7.1.3 er frigivet
+CURL needs to be updated due to a security issue.
+Fix will come with CentOS 7.1.3, so until that comes out you need to do the following:
 ```
 sudo rpm -Uvh http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/city-fan.org-release-1-13.rhel7.noarch.rpm
 sudo yum -y install libcurl php-curl
@@ -32,7 +35,7 @@ $ sudo yum -y install httpd mariadb mariadb-server php-fpm php-cli php-gd php-mc
 $ sudo systemctl start mariadb
 $ sudo mysql_secure_installation
     current root password is [blank] - just press [[ENTER]]
-    Change the root password? [Y/n] Y -> 3grise+1ulv
+    Change the root password? [Y/n] Y -> yourSecretPassword 
     Remove anonymous users? [Y/n] Y
     Disallow root login remotely? [Y/n] Y
     Remove test database and access to it? [Y/n] Y
@@ -40,6 +43,7 @@ $ sudo mysql_secure_installation
 ```
 
 Configure PHP-FPM (FastCGI Process Manager)
+Make sure that the configuration is as following (default):
 ```
 $ sudo vim /etc/php-fpm.d/www.conf
     listen = 127.0.0.1:9000
@@ -60,8 +64,8 @@ $ sudo systemctl start httpd
 ```
 $ mysql -u root -p
 > CREATE DATABASE owncloud_db;
-> CREATE USER owncloud_usr@localhost IDENTIFIED BY 'secretpassword';
-> GRANT ALL PRIVILEGES ON owncloud_db.* TO owncloud_usr IDENTIFIED BY 'secretpassword';
+> CREATE USER owncloud_usr@localhost IDENTIFIED BY 'anotherSecretPassword';
+> GRANT ALL PRIVILEGES ON owncloud_db.* TO owncloud_usr IDENTIFIED BY 'anotherSecretPassword';
 > FLUSH PROVILEGES;
 > QUIT;
 ```
@@ -104,32 +108,33 @@ password: yourSecretPassword
 Choose: mariadb
 ```
 db_user: owncloud_usr 
-db_pass: secretpassword 
+db_pass: anotherSecretPassword 
 db_name: owncloud_db
 db_host: localhost 
 ```
 You ar e now logged in for the first time.
 
-I menuen under det lille sky ikon i øverste venstre hjørne trykker du på plustegnet "Apps"
-i ventremenuen vælger du "slået fra"
-Find tilføjelsen "LDAP user and group backend" og aktiver den.
+In the left side top menu undernieth the little cloud icon, press the + sign called "Apps"
+The new menu on the left pane, you choose "slået fra" / "disabled"
+Find the app called "LDAP user and group backend" and enable it 
 
-Skift til Admin siden i menuen øverst til højre.
+In the top right menu change to the "Admin" menu.
 
-Find afsnittet med LDAP og indtast følgende
+
+find the LDAP section (newly added based on the enabling of the LDAP app).
+Configure it appropriate to your own LDAP settings. Example:
+```
 Server: ldap://ldap1.govcert.dk
 Port: 389
 Bruger Dn:
 Kodeord:
 Base DN: dc=govcert,dc=dk
+```
 
-På fanen "Brugere" vælges "PosixAccount"
-På fanen "Grupper" vælges "Rediger LDAP forespørgsel"
-Indtast objectclass=posixGroup
+On the pane "Users" choose "posixAccount"
+On the pane Goups choose "Edit LDAP query" and insert the text: objectclass=posixGroup
 
-Opret gruppe mapper - grupper i LDAP kan findes med kommandoen
-ldapsearch -H ldap://ldap1.govcert.dk -b "dc=govcert,dc=dk" -s sub -x "(objectclass=posixGroup)" cn
 
-Hovedparten af denne vejledning er taget fra:
+Credits goes to:
 https://www.howtoforge.com/tutorial/how-to-install-owncloud-8-with-nginx-and-mariadb-on-centos-7/
 
