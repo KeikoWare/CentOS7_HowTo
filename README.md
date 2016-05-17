@@ -60,7 +60,7 @@ $ sudo systemctl start php-fpm
 $ sudo systemctl start httpd
 ```
 
-## CREATE DATABASE FOR OWNCLOUD 
+## Create database for ownCloud 
 ```
 $ mysql -u root -p
 > CREATE DATABASE owncloud_db;
@@ -70,7 +70,7 @@ $ mysql -u root -p
 > QUIT;
 ```
 
-## INSTALL OWNCLOUD:
+## Install ownCloud
 First create /etc/yum.repos.d/owncloud.repo:
 ```
 $ sudo vi /etc/yum.repos.d/owncloud.repo 
@@ -134,6 +134,7 @@ Base DN: dc=govcert,dc=dk
 On the pane "Users" choose "posixAccount"
 On the pane Goups choose "Edit LDAP query" and insert the text: objectclass=posixGroup
 
+now create folders that matches the groups in your LDAP, and you have yourself a organisational file sharing platform, based on http.
 
 Credits goes to:
 https://www.howtoforge.com/tutorial/how-to-install-owncloud-8-with-nginx-and-mariadb-on-centos-7/
