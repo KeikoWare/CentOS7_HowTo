@@ -124,11 +124,11 @@ In the top right menu change to the "Admin" menu.
 find the LDAP section (newly added based on the enabling of the LDAP app).
 Configure it appropriate to your own LDAP settings. Example:
 ```
-Server: ldap://ldap1.govcert.dk
+Server: ldap://ldapserver.domain.org
 Port: 389
 Bruger Dn:
 Kodeord:
-Base DN: dc=govcert,dc=dk
+Base DN: dc=domain,dc=org
 ```
 
 On the pane "Users" choose "posixAccount"
