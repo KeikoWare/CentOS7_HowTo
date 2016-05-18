@@ -106,7 +106,7 @@ Finish of the installation from the web GUI
 Browse to http://[the_ip_of_your_server]/owncloud 
 ```
 administrator: admin
-password: yourSecretPassword
+password: thirdSecretPassword
 ```
 Choose: mariadb
 ```
