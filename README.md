@@ -6,6 +6,8 @@ Install CentOS 7 minimal installation
  - Set root password
  - Make administrator account
 
+And login as administrator.
+
 Disable SElinux:
 ```
 $ sudo  vi /etc/sysconfig/selinux
@@ -25,8 +27,8 @@ $ sudo firewall-cmd --reload
 CURL needs to be updated due to a security issue.
 Fix will come with CentOS 7.1.3, so until that comes out you need to do the following:
 ```
-sudo rpm -Uvh http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/city-fan.org-release-1-13.rhel7.noarch.rpm
-sudo yum -y install libcurl php-curl
+$ sudo rpm -Uvh http://www.city-fan.org/ftp/contrib/yum-repo/rhel7/x86_64/city-fan.org-release-1-13.rhel7.noarch.rpm
+$ sudo yum -y install libcurl php-curl
 ```
 
 ## Install dependencies
@@ -45,7 +47,8 @@ $ sudo mysql_secure_installation
 Configure PHP-FPM (FastCGI Process Manager)
 Make sure that the configuration is as following (default):
 ```
-$ sudo vim /etc/php-fpm.d/www.conf
+$ sudo vi /etc/php-fpm.d/www.conf
+[[i]]
     listen = 127.0.0.1:9000
     user = apache
     group = apache
