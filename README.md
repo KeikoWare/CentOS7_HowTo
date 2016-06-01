@@ -2,4 +2,6 @@
 
 ## Setup filecloud server "ownCloud"
 
-CentOs7_owncloud.md
+ownCloud_setup.md
+
+https://owncloud.com/
